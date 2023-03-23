@@ -49,3 +49,15 @@ app.use((request, response, next) => {
 
     next();
 });
+
+// app.length('v1/whatsapp/contatos/:numero', cors(), async function(request, response, next){
+
+//     let numeroContato = request.query.numero;
+
+//     let 
+
+
+// })
+
+
+
