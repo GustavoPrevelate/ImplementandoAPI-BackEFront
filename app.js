@@ -28,8 +28,13 @@ const cors = require('cors');
 //Body conteudo da mensagem --> Header e Main
 const bodyParser = require('body-parser');
 
+
+
 //Import do arquivo de funções 
-const contatosWhatsApp = require('./modulo/contatos.js');
+ 
+
+// module.import = { contatos } 
+const contatos = require('./modulo/contatos.js');
 
 //Cria um objeto com as informações da classe express
 const app = express();
@@ -50,14 +55,37 @@ app.use((request, response, next) => {
     next();
 });
 
-// app.length('v1/whatsapp/contatos/:numero', cors(), async function(request, response, next){
+app.get('/v1/whatsapp/contacts', cors(), async function(request, response, next){
 
-//     let numeroContato = request.query.numero;
+    let idContato = request.query.id;
 
-//     let 
+    let statusCode;
+    let dadosContatos = {};
+
+    if(idContato == '' || idContato == undefined){
+        statusCode = 400;
+        dadosContatos.message = "Não é possivel retornar as conversas dos contatos pois não esta puxando as conversas"
+    } else{
+        let contatosID = contatos.getContacts(idContato);
+
+        if(contatosID){
+            statusCode = 200;
+            dadosContatos = contatosID;
+        } else{
+            statusCode = 404;
+            dadosContatos.message = "Não é possivel processar a requisição pois o id do contato não existe"
+        }
+    }
+
+    response.status(statusCode);
+    response.json(dadosContatos);
+})
 
 
-// })
+//Permite carregar os endpoint criados e aguarda as requições
+//Pelo protocolo HTTP na porta 8080
 
+app.listen(8080, function() {
+    console.log('Servidor aguardando requisições na porta 8080.');
 
-
+});

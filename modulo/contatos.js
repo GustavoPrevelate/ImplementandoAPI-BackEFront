@@ -1,5 +1,5 @@
 //export const contatos ={
- const contatos = {
+const contatos = {
   "whats-users":
     [
       {
@@ -571,12 +571,15 @@
     ]
 }
 
-let getContacts = (id) => {
 
-  let contatosWhatsapp = contatos["whats-users"][id-1]
-  return contatosWhatsapp.contacts
+let getContacts = function(id) {
+  let users = {};
 
+  users.contatos = contatos["whats-users"][id-1].contacts;
+  return users;
 }
 
-
-console.log(getContacts(1))
+//console.log(getContacts(1))
+module.exports = {
+  getContacts
+}
